@@ -42,7 +42,6 @@ namespace BrunoZell.Enumerizer.Tests
             Assert.Equal(4, it.Last());
         }
 
-
         [Fact]
         public void Test5()
         {
@@ -50,6 +49,14 @@ namespace BrunoZell.Enumerizer.Tests
 
             Assert.Equal(99, it.First());
             Assert.Equal(90, it.Last());
+        }
+
+        [Fact]
+        public void Test6()
+        {
+            int[] it = (0 <= i <= 6 | 2).ToArray();
+
+            Assert.Equal(4, it.Length);
         }
     }
 }
