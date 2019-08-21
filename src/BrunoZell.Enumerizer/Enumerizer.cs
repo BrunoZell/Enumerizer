@@ -21,7 +21,7 @@ public readonly struct Enumerizer
 
 namespace BrunoZell.Enumerizer
 {
-    public readonly ref struct StartEnumerizer
+    public readonly struct StartEnumerizer
     {
         public readonly int Value;
 
