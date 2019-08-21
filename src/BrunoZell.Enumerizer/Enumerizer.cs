@@ -1,31 +1,49 @@
-﻿using System;
+﻿using BrunoZell.Enumerizer;
+using System;
 using System.Collections.Generic;
 
 public readonly struct Enumerizer
 {
     public static readonly Enumerizer i = default;
 
-    public Enumerizer(int start)
-    {
-        Start = start;
-    }
+    public static StartEnumerizer operator <(int start, Enumerizer _) =>
+        new StartEnumerizer(start + 1);
 
-    public readonly int Start;
-
-    public static Enumerizer operator <(int start, Enumerizer _) =>
-        new Enumerizer(start);
-
-    public static Enumerizer operator >(int _, Enumerizer __) =>
+    public static StartEnumerizer operator >(int start, Enumerizer _) =>
         throw new NotImplementedException();
 
-    public static IEnumerable<int> operator <=(Enumerizer start, int end)
+    public static StartEnumerizer operator <=(int start, Enumerizer _) =>
+        new StartEnumerizer(start);
+
+    public static StartEnumerizer operator >=(int start, Enumerizer _) =>
+        throw new NotImplementedException();
+}
+
+namespace BrunoZell.Enumerizer
+{
+    public readonly ref struct StartEnumerizer
     {
-        for (int i = start.Start; i < end; i++)
+        public readonly int Value;
+
+        public StartEnumerizer(int value) =>
+            Value = value;
+
+        public static IEnumerable<int> operator <(StartEnumerizer start, int end)
         {
-            yield return i;
+            for (int i = start.Value; i < end; i++)
+                yield return i;
         }
-    }
 
-    public static IEnumerable<int> operator >=(Enumerizer _, int __) =>
-        throw new NotImplementedException();
+        public static IEnumerable<int> operator >(StartEnumerizer start, int end) =>
+            throw new NotImplementedException();
+
+        public static IEnumerable<int> operator <=(StartEnumerizer start, int end)
+        {
+            for (int i = start.Value; i <= end; i++)
+                yield return i;
+        }
+
+        public static IEnumerable<int> operator >=(StartEnumerizer start, int end) =>
+            throw new NotImplementedException();
+    }
 }
