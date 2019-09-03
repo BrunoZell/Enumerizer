@@ -4,6 +4,8 @@ namespace BrunoZell.Enumerizer
 {
     public readonly ref struct StartEnumerizer
     {
+        private const string WrongOperatorChainingExceptionMessage = "Enumerizer operators are not compatible. All 'arrows' have to point in the same direction to make it clear whether to increment or decrement";
+
         public readonly int Value;
         public readonly Order Order;
 
@@ -16,7 +18,7 @@ namespace BrunoZell.Enumerizer
         public static StartToEndEnumerizer operator <(StartEnumerizer start, int end)
         {
             if (start.Order != Order.Ascending)
-                throw new NotSupportedException();
+                throw new NotSupportedException(WrongOperatorChainingExceptionMessage);
 
             if (start.Value >= end)
                 throw new NotSupportedException();
@@ -27,7 +29,7 @@ namespace BrunoZell.Enumerizer
         public static StartToEndEnumerizer operator >(StartEnumerizer start, int end)
         {
             if (start.Order != Order.Descending)
-                throw new NotSupportedException();
+                throw new NotSupportedException(WrongOperatorChainingExceptionMessage);
 
             if (start.Value <= end)
                 throw new NotSupportedException();
@@ -38,7 +40,7 @@ namespace BrunoZell.Enumerizer
         public static StartToEndEnumerizer operator <=(StartEnumerizer start, int end)
         {
             if (start.Order != Order.Ascending)
-                throw new NotSupportedException();
+                throw new NotSupportedException(WrongOperatorChainingExceptionMessage);
 
             if (start.Value > end)
                 throw new NotSupportedException();
@@ -49,7 +51,7 @@ namespace BrunoZell.Enumerizer
         public static StartToEndEnumerizer operator >=(StartEnumerizer start, int end)
         {
             if (start.Order != Order.Descending)
-                throw new NotSupportedException();
+                throw new NotSupportedException(WrongOperatorChainingExceptionMessage);
 
             if (start.Value < end)
                 throw new NotSupportedException();
