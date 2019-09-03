@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿using System;
 
 namespace BrunoZell.Enumerizer
 {
@@ -15,29 +15,45 @@ namespace BrunoZell.Enumerizer
 
         public static StartToEndEnumerizer operator <(StartEnumerizer start, int end)
         {
-            Debug.Assert(start.Order == Order.Ascending);
-            Debug.Assert(start.Value < end);
+            if (start.Order != Order.Ascending)
+                throw new NotSupportedException();
+
+            if (start.Value >= end)
+                throw new NotSupportedException();
+
             return new StartToEndEnumerizer(start.Value, end - 1);
         }
 
         public static StartToEndEnumerizer operator >(StartEnumerizer start, int end)
         {
-            Debug.Assert(start.Order == Order.Descending);
-            Debug.Assert(start.Value > end);
+            if (start.Order != Order.Descending)
+                throw new NotSupportedException();
+
+            if (start.Value <= end)
+                throw new NotSupportedException();
+
             return new StartToEndEnumerizer(start.Value, end + 1);
         }
 
         public static StartToEndEnumerizer operator <=(StartEnumerizer start, int end)
         {
-            Debug.Assert(start.Order == Order.Ascending);
-            Debug.Assert(start.Value <= end);
+            if (start.Order != Order.Ascending)
+                throw new NotSupportedException();
+
+            if (start.Value > end)
+                throw new NotSupportedException();
+
             return new StartToEndEnumerizer(start.Value, end);
         }
 
         public static StartToEndEnumerizer operator >=(StartEnumerizer start, int end)
         {
-            Debug.Assert(start.Order == Order.Descending);
-            Debug.Assert(start.Value >= end);
+            if (start.Order != Order.Descending)
+                throw new NotSupportedException();
+
+            if (start.Value < end)
+                throw new NotSupportedException();
+
             return new StartToEndEnumerizer(start.Value, end);
         }
     }
